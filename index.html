@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Expectancy Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px; /* Add padding to the top */
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group input[type="checkbox"] {
+            width: auto;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Life Expectancy Calculator</h1>
+    <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" min="0">
+    </div>
+    <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="smoker"> Are you a smoker?
+        </label>
+    </div>
+    <div class="form-group">
+        <label for="exerciseHours">Hours of exercise per week</label>
+        <input type="number" id="exerciseHours" min="0">
+    </div>
+    <div class="form-group">
+        <label for="diet">Diet</label>
+        <select id="diet">
+            <option value="Balanced">Balanced</option>
+            <option value="Unhealthy">Unhealthy</option>
+            <option value="Healthy">Healthy</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="stressLevel">Stress Level</label>
+        <select id="stressLevel">
+            <option value="Low">Low</option>
+            <option value="Moderate">Moderate</option>
+            <option value="High">High</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="alcoholConsumption">Alcohol consumption per week (drinks)</label>
+        <input type="number" id="alcoholConsumption" min="0">
+    </div>
+    <div class="form-group">
+        <label for="sleepHours">Hours of sleep per night</label>
+        <input type="number" id="sleepHours" min="0">
+    </div>
+    <div class="form-group">
+        <label for="waterIntake">Liters of water per day</label>
+        <input type="number" id="waterIntake" min="0" step="0.1">
+    </div>
+    <div class="form-group">
+        <label for="fruitVegIntake">How many times do you eat fruits/veggies per day</label>
+        <input type="number" id="fruitVegIntake" min="0">
+    </div>
+    <div class="form-group">
+        <label for="mentalHealth">Mental Health</label>
+        <select id="mentalHealth">
+            <option value="Good">Good</option>
+            <option value="Average">Average</option>
+            <option value="Poor">Poor</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="socialConnections">Social Connections</label>
+        <select id="socialConnections">
+            <option value="Many">Many</option>
+            <option value="Few">Few</option>
+            <option value="None">None</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cholesterolLevel">Cholesterol Level</label>
+        <select id="cholesterolLevel">
+            <option value="Normal">Normal</option>
+            <option value="High">High</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="bloodPressure">Blood Pressure</label>
+        <select id="bloodPressure">
+            <option value="Normal">Normal</option>
+            <option value="High">High</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="diabetes"> Do you have diabetes?
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="geneticConditions"> Do you have any genetic conditions?
+        </label>
+    </div>
+    <div class="form-group">
+        <label for="safetyMeasures">Safety Measures (e.g., seatbelts)</label>
+        <select id="safetyMeasures">
+            <option value="Always">Always</option>
+            <option value="Sometimes">Sometimes</option>
+            <option value="Never">Never</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sunExposure">Sun Exposure</label>
+        <select id="sunExposure">
+            <option value="Minimal">Minimal</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Excessive">Excessive</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="regularCheckups">Regular Medical Checkups</label>
+        <select id="regularCheckups">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="medicationAdherence">Medication Adherence</label>
+        <select id="medicationAdherence">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>
+    <button onclick="calculateLifeExpectancy()">Calculate Life Expectancy</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function calculateLifeExpectancy() {
+    const age = parseFloat(document.getElementById('age').value);
+    const gender = document.getElementById('gender').value;
+    const smoker = document.getElementById('smoker').checked;
+    const exerciseHours = parseFloat(document.getElementById('exerciseHours').value);
+    const diet = document.getElementById('diet').value;
+    const stressLevel = document.getElementById('stressLevel').value;
+    const alcoholConsumption = parseFloat(document.getElementById('alcoholConsumption').value);
+    const sleepHours = parseFloat(document.getElementById('sleepHours').value);
+    const waterIntake = parseFloat(document.getElementById('waterIntake').value);
+    const fruitVegIntake = parseFloat(document.getElementById('fruitVegIntake').value);
+    const mentalHealth = document.getElementById('mentalHealth').value;
+    const socialConnections = document.getElementById('socialConnections').value;
+    const cholesterolLevel = document.getElementById('cholesterolLevel').value;
+    const bloodPressure = document.getElementById('bloodPressure').value;
+    const diabetes = document.getElementById('diabetes').checked;
+    const geneticConditions = document.getElementById('geneticConditions').checked;
+    const safetyMeasures = document.getElementById('safetyMeasures').value;
+    const sunExposure = document.getElementById('sunExposure').value;
+    const regularCheckups = document.getElementById('regularCheckups').value;
+    const medicationAdherence = document.getElementById('medicationAdherence').value;
+
+    if (isNaN(age) || isNaN(exerciseHours) || isNaN(alcoholConsumption) || isNaN(sleepHours) ||
+        isNaN(waterIntake) || isNaN(fruitVegIntake)) {
+        document.getElementById('result').textContent = "Please enter valid numbers for age, exercise hours, alcohol consumption, sleep hours, water intake, and fruit/vegetable intake.";
+        return;
+    }
+
+    let lifeExpectancy = 80.0;
+
+    // Adjust for gender
+    if (gender === "Female") {
+        lifeExpectancy += 5;
+    }
+
+    // Adjust for smoking
+    if (smoker) {
+        lifeExpectancy -= 10;
+    }
+
+    // Adjust for diet
+    switch (diet) {
+        case "Balanced":
+            lifeExpectancy += 2;
+            break;
+        case "Healthy":
+            lifeExpectancy += 5;
+            break;
+        default:
+            lifeExpectancy -= 5;
+    }
+
+    // Adjust for stress level
+    switch (stressLevel) {
+        case "Low":
+            lifeExpectancy += 3;
+            break;
+        case "Moderate":
+            lifeExpectancy += 0;
+            break;
+        default:
+            lifeExpectancy -= 5;
+    }
+
+    // Adjust for exercise
+    lifeExpectancy += exerciseHours * 0.5;
+
+    // Adjust for alcohol consumption
+    lifeExpectancy -= alcoholConsumption * 0.5;
+
+    // Adjust for sleep
+    if (sleepHours >= 7 && sleepHours <= 9) {
+        lifeExpectancy += 3;
+    } else {
+        lifeExpectancy -= 3;
+    }
+
+    // Adjust for water intake
+    lifeExpectancy += waterIntake * 0.5;
+
+    // Adjust for fruit/vegetable intake
+    if (fruitVegIntake >= 5) {
+        lifeExpectancy += 3;
+    } else {
+        lifeExpectancy -= 3;
+    }
+
+    // Adjust for mental health
+    switch (mentalHealth) {
+        case "Good":
+            lifeExpectancy += 3;
+            break;
+        case "Average":
+            lifeExpectancy += 0;
+            break;
+        default:
+            lifeExpectancy -= 3;
+    }
+
+    // Adjust for social connections
+    switch (socialConnections) {
+        case "Many":
+            lifeExpectancy += 3;
+            break;
+        case "Few":
+            lifeExpectancy += 0;
+            break;
+        default:
+            lifeExpectancy -= 3;
+    }
+
+    // Adjust for cholesterol level
+    if (cholesterolLevel === "High") {
+        lifeExpectancy -= 5;
+    }
+
+    // Adjust for blood pressure
+    if (bloodPressure === "High") {
+        lifeExpectancy -= 5;
+    }
+
+    // Adjust for diabetes
+    if (diabetes) {
+        lifeExpectancy -= 5;
+    }
+
+    // Adjust for genetic conditions
+    if (geneticConditions) {
+        lifeExpectancy -= 5;
+    }
+
+    // Adjust for safety measures
+    switch (safetyMeasures) {
+        case "Always":
+            lifeExpectancy += 3;
+            break;
+        case "Sometimes":
+            lifeExpectancy += 0;
+            break;
+        default:
+            lifeExpectancy -= 3;
+    }
+
+    // Adjust for sun exposure
+    switch (sunExposure) {
+        case "Minimal":
+            lifeExpectancy += 0;
+            break;
+        case "Moderate":
+            lifeExpectancy += 3;
+            break;
+        default:
+            lifeExpectancy -= 3;
+    }
+
+    // Adjust for regular medical checkups
+    if (regularCheckups === "Yes") {
+        lifeExpectancy += 3;
+    }
+
+    // Adjust for medication adherence
+    if (medicationAdherence === "Yes") {
+        lifeExpectancy += 3;
+    }
+
+    // Adjust for age and future healthcare improvements
+    const futureHealthFactor = (100 - age) * 0.2;
+    lifeExpectancy += futureHealthFactor;
+
+    lifeExpectancy -= age;
+
+    // Convert life expectancy to years, months, and days
+    const years = Math.floor(lifeExpectancy);
+    const months = Math.floor((lifeExpectancy - years) * 12);
+    const days = Math.floor((((lifeExpectancy - years) * 12) - months) * 30.44);
+
+    document.getElementById('result').textContent = `You will die at the age of ${years} years, ${months} months, and ${days} days:)`;
+}
+</script>
+
+</body>
+</html>
